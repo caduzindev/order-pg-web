@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, CardActions, CardHeader } from "@mui/material"
+import { Avatar, Button, Card, CardActions, CardHeader, Chip, Grid } from "@mui/material"
 
 export const Order = ({
   name,
@@ -17,7 +17,14 @@ export const Order = ({
 
       />
       <CardActions>
-        <Button size="small">Ver detalhes</Button>
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid>
+            <Button size="small">Ver detalhes</Button>
+          </Grid>
+          <Grid>
+            <Chip label="Distancia: 26 min" />
+          </Grid>
+        </Grid>
       </CardActions>
     </Card>
   )
