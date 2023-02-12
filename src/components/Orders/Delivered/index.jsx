@@ -3,8 +3,8 @@ import { useQuery } from "react-query"
 import { OrderServiceApi } from "../../../services/api/order"
 import { Order } from "../../Order"
 
-export const NotDelivery = () => {
-  const { data,isLoading,isError,error } = useQuery('notdelivery', async ()=> OrderServiceApi.getAllFilter({status: 'notdelivery'}),{
+export const Delivered = () => {
+  const { data,isLoading,isError,error } = useQuery('delivered', async ()=> OrderServiceApi.getAllFilter({status: 'delivered'}),{
     cacheTime: 1000,
     refetchInterval: 5000
   })

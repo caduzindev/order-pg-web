@@ -6,7 +6,7 @@ export const statusMenuMap = {
   0: 'standby',
   1: 'done',
   2: 'delivery',
-  3: 'notdelivered',
+  3: 'delivered',
 }
 
 export const MenuContext = ({children}) => {
