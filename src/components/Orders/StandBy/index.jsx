@@ -6,7 +6,7 @@ import { Order } from "../../Order"
 export const StandBy = () => {
   const { data,isLoading,isError,error } = useQuery('standby', async ()=> OrderServiceApi.getAllFilter({status: 'standby'}),{
     cacheTime: 1000,
-    refetchInterval: 5000
+    refetchInterval: 10000
   })
   if (isLoading) {
     return <span>Loading...</span>
@@ -19,7 +19,15 @@ export const StandBy = () => {
      <Grid container spacing={2} justifyContent="center" marginTop={0.5}>
         {data.map(order=>(
           <Grid item lg={4} md={4} key={order._id}>
-            <Order name={order.name} deadline={order.deadline}/>
+            <Order
+              name={order.name}
+              phone={order.phone}
+              deadline={order.deadline}
+              address={order.address}
+              burguers={order.burguers}
+              durationText={order.durationText}
+              status={order.status}
+            />
           </Grid>
         ))}
     </Grid>
