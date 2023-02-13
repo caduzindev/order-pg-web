@@ -8,8 +8,11 @@ import {
   CardActions,
   CardContent,
   Chip,
+  FormControl,
   Grid,
+  MenuItem,
   Modal,
+  Select,
   Typography
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
@@ -17,9 +20,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ContactsRoundedIcon from '@mui/icons-material/ContactsRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LunchDiningRoundedIcon from '@mui/icons-material/LunchDiningRounded';
-import InfoIcon from '@mui/icons-material/Info';
 import { useState } from "react"
 import { styleOrderMap } from "./styles"
+import { statusOrder as statusOrderModel } from "../../models/order";
+
 export const Order = ({
   name,
   phone,
@@ -30,6 +34,7 @@ export const Order = ({
   durationText
 }) => {
   const [open,setOpen] = useState(false)
+  const [statusOrder,setStatusOrder] = useState(status)
   const styles = styleOrderMap[status]
   const generalStyles = styleOrderMap['general']
   return (
@@ -72,6 +77,20 @@ export const Order = ({
             </Grid>
             <Grid item xs={12} container justifyContent={"center"}>
               <Typography fontWeight={"500"} sx={{fontSize: 21}}>{name}</Typography>
+            </Grid>
+            <Grid item xs={12} container justifyContent={"center"}>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <Select
+                  value={statusOrder}
+                  onChange={(e)=>setStatusOrder(e.target.value)}
+                  displayEmpty
+                >
+                  <MenuItem value={status}>
+                    {status}
+                  </MenuItem>
+                  {statusOrderModel.map(st => st !== status ? <MenuItem key={st} value={st}>{st}</MenuItem> : '')}
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
 
