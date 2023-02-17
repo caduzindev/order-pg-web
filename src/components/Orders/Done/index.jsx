@@ -1,11 +1,9 @@
 import { Grid } from "@mui/material"
-import { useState } from "react"
 import { useQuery } from "react-query"
 import { OrderServiceApi } from "../../../services/api/order"
 import { Order } from "../../Order"
 
 export const Done = () => {
-  const [changeStatus,setChangeStatus] = useState(false)
   const { data,isLoading,isError,error } = useQuery('done', async ()=> OrderServiceApi.getAllFilter({status: 'done'}),{
     cacheTime: 1000,
     refetchInterval: 5000
@@ -31,7 +29,6 @@ export const Done = () => {
                 burguers={order.burguers}
                 durationText={order.durationText}
                 status={order.status}
-                setChangeStatus={setChangeStatus}
               />
             </Grid>
           ))}

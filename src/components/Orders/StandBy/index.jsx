@@ -1,11 +1,9 @@
 import { Grid } from "@mui/material"
-import { useState } from "react"
 import { useQuery } from "react-query"
 import { OrderServiceApi } from "../../../services/api/order"
 import { Order } from "../../Order"
 
 export const StandBy = () => {
-  const [changeStatus,setChangeStatus] = useState(false)
   const { data,isLoading,isError,error } = useQuery('standby', async ()=> OrderServiceApi.getAllFilter({status: 'standby'}),{
     cacheTime: 1000,
     refetchInterval: 10000
@@ -31,7 +29,6 @@ export const StandBy = () => {
                 burguers={order.burguers}
                 durationText={order.durationText}
                 status={order.status}
-                setChangeStatus={setChangeStatus}
               />
             </Grid>
           ))}
