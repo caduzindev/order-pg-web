@@ -11,4 +11,7 @@ export class OrderServiceApi {
 
     return data.data
   }
+  static async updateStatusOrder(orderId,status) {
+    instance.put('order/update-status-order/'+orderId,{ status })
+  }
 }

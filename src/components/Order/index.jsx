@@ -22,21 +22,27 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LunchDiningRoundedIcon from '@mui/icons-material/LunchDiningRounded';
 import { useState } from "react"
 import { styleOrderMap } from "./styles"
-import { statusOrder as statusOrderModel } from "../../models/order";
+import { statusOrder as statusOrderModel, statusOrderTranslate } from "../../models/order";
+import { useMutation } from "react-query";
+import { OrderServiceApi } from "../../services/api/order";
 
 export const Order = ({
+  id,
   name,
   phone,
   address,
   deadline,
   status,
   burguers,
-  durationText
+  durationText,
+  setChangeStatus
 }) => {
   const [open,setOpen] = useState(false)
   const [statusOrder,setStatusOrder] = useState(status)
   const styles = styleOrderMap[status]
   const generalStyles = styleOrderMap['general']
+  const mutation = useMutation(data => OrderServiceApi.updateStatusOrder(data.id,data.status))
+
   return (
     <>
       <Card sx={styles.card}>
@@ -55,7 +61,7 @@ export const Order = ({
         </CardContent>
         <CardActions>
           <Grid container alignItems="center" justifyContent={"space-between"}>
-             <Grid container justifyContent={"center"} spacing={1}>
+            <Grid container justifyContent={"center"} spacing={1}>
               <Grid item>
                 <Button size="small" sx={styles.button} onClick={()=>setOpen(!open)}>Ver detalhes</Button>
               </Grid>
@@ -82,13 +88,18 @@ export const Order = ({
               <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <Select
                   value={statusOrder}
-                  onChange={(e)=>setStatusOrder(e.target.value)}
+                  onChange={(e)=>{
+                    setStatusOrder(e.target.value)
+                    setOpen(false)
+                    setChangeStatus(true)
+                    mutation.mutate({status:e.target.value,id})
+                  }}
                   displayEmpty
                 >
                   <MenuItem value={status}>
-                    {status}
+                    {statusOrderTranslate[status]}
                   </MenuItem>
-                  {statusOrderModel.map(st => st !== status ? <MenuItem key={st} value={st}>{st}</MenuItem> : '')}
+                  {statusOrderModel.map(st => st !== status ? <MenuItem key={st} value={st}>{statusOrderTranslate[st]}</MenuItem> : '')}
                 </Select>
               </FormControl>
             </Grid>
@@ -105,8 +116,8 @@ export const Order = ({
                 <Typography ml={1}>Contato</Typography>
               </AccordionSummary>
               <AccordionDetails>
-               <Chip label={`Telefone: ${phone}`} />
-               </AccordionDetails>
+              <Chip label={`Telefone: ${phone}`} />
+              </AccordionDetails>
             </Accordion>
           </Grid>
           <Grid item  xs={12} sm={12} md={4} lg={4}>
