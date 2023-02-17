@@ -34,17 +34,19 @@ export const Order = ({
   deadline,
   status,
   burguers,
-  durationText,
-  setChangeStatus
+  durationText
 }) => {
   const [open,setOpen] = useState(false)
   const [statusOrder,setStatusOrder] = useState(status)
   const styles = styleOrderMap[status]
   const generalStyles = styleOrderMap['general']
   const mutation = useMutation(data => OrderServiceApi.updateStatusOrder(data.id,data.status))
+  const [changeStatus,setChangeStatus] = useState(false)
 
   return (
     <>
+      {!changeStatus && (<>
+
       <Card sx={styles.card}>
         <CardContent>
           <Grid container alignItems={"center"} spacing={1}>
@@ -168,6 +170,7 @@ export const Order = ({
           </Grid>
         </Grid>
       </Modal>
+      </>)}
     </>
   )
 }
